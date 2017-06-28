@@ -40,9 +40,9 @@ function indexOf(array, value) {
   return -1;
 };
 
-const nums = ['a','b','c','d'];
+const letters = ['a','b','c','d'];
 
-// console.log(indexOf(nums, 'd'));
+// console.log(indexOf(letters, 'd'));
 
 function binarySearch(array, value, start, end) {
   start = start === undefined ? 0 : start;
@@ -67,7 +67,7 @@ function binarySearch(array, value, start, end) {
   }
 }
 
-//console.log(binarySearch(nums, 'd'));
+// console.log(binarySearch(letters, 'd'));
 
 class BinaryTree {
   constructor(value) {
@@ -75,9 +75,31 @@ class BinaryTree {
     this.left = null;
     this.right = null;
   }
-}
-  //this goes the pointer on each node
-  function dfs(values = []) {
+  insert(key, value) {
+        if (this.key == null) {
+            this.key = key;
+            this.value = value;
+        }
+        else if (key < this.key) {
+            if (this.left == null) {
+                this.left = new BinarySearchTree(key, value, this);
+            }
+            else {
+                this.left.insert(key, value);
+            }
+        }
+        else {
+            if (this.right == null) {
+                this.right = new BinarySearchTree(key, value, this);
+            }
+            else {
+                this.right.insert(key, value);
+            }
+        }
+    }
+  //depth first goes all the way to bottom
+  dfs(values = []) {
+    console.log(`This is the  dfs this`, this);
     if (this.left) {
       values = this.left.dfs(values);
     }
@@ -85,18 +107,27 @@ class BinaryTree {
     if (this.right) {
       values = this.right.dfs(values);
     }
+    console.log(value);
     return values;
   }
-  //breadth first goes through each level
+  //breadth first goes through each level --left to right
+  bfs(value = []) {
+    const queue = [this];
+    while(queue.length) {
+      const node = queue.shift();
+      values.push(node.value);
+      if(node.left) {
+        queue.push()
+      }
+    }
+  }
+}
 
-
-const BStree = new BinarySearchTree();
-BStree.insert(3, 3);
-BStree.insert(5, 5);
-BStree.insert(8, 8);
-BStree.insert(1, 1);
-BStree.insert(2, 2);
-console.log(BStree);
 const Btree = new BinaryTree();
+Btree.insert(3, 3);
+Btree.insert(5, 5);
+Btree.insert(8, 8);
+Btree.insert(1, 1);
+Btree.insert(2, 2);
 
-console.log(Btree);
+console.log(Btree.dfs());
