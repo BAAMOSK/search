@@ -74,8 +74,6 @@ const letters = ['a','b','c','d'];
 
 
 function binarySearch(array, value, start = 0, end = array.length) {
-  // start = start === undefined ? 0 : start;
-  // end = end === undefined ? array.length : end;
 
   if(start > end) {
     return -1;
@@ -188,24 +186,59 @@ function intSearch(array, int){
 //go to shelf with 500 category. Go to the higher end. This effectively eliminates half of the library from consideration.
 //repeat this process until we narrow it down to the book we're looking for.
 
-let library = [100, 200, 300, 400, 500, 562.3, 600, 700, 800, 900];
+// let library = [100, 200, 300, 400, 500, 562.3, 600, 700, 800, 900];
+
+
+// const nums = [];
+// library.forEach(book => {
+//   let num = book.split(' ');
+//   // console.log(num[0]);
+//   nums.push(num[0]);
+// });
+// console.log(nums);
+// console.log(nums[0] >= nums[5])
+
 
 function deweyDecimal(library, target, start = 0, end = library.length){
   if(start > end){
     return -1;
   }
-  let midpoint = Math.floor((start + end) / 2);
-  console.log(midpoint + '<--  midpoint   ' + start + '  <---- start' + end + '  <-----end' );
-  if(library[midpoint] > target){
+  let midpoint = Math.round((start + end) / 2);
+  if(midpoint >= library.length) midpoint -=1;
+  let item = library[midpoint].split(' ');
+  let targetNum = target.split(' ');
+  targetNum = targetNum[0];
+  let itemNum = item[0];
+  let fullItem = library[midpoint];
+  console.log(fullItem);
+  console.log(targetNum);
+  console.log(midpoint + '<--  midpoint   ' + start + '  <---- start   ' + end + '  <-----end' );
+  if(itemNum > targetNum){
     return deweyDecimal(library, target, start, midpoint - 1);
-  }else if (library[midpoint] < target){
+  }else if (itemNum < targetNum){
     return deweyDecimal(library, target, midpoint + 1, end);
-  } else {
+  } else if (fullItem == target) {
     return midpoint;
+  } else {
+    return deweyDecimal(library, target, start-1, end-1);
   }
 }
-let i = deweyDecimal(library, 200);
-console.log(i);
+const library = [
+  '005.133 Mike Cowlishaw: The REXX Language',
+  '005.133 Sams: Teach Yourself C++ In 21 Days',
+  '005.133 Bjarne Stroustrup: The C++ Programming Language',
+  '005.2762 Douglas Crockford: JavaScript: The Good Parts',
+  '005.2762 David Flanagan: JavaScript: The Definitive Guide',
+  '005.44684 Meinhard Schmidt: Windows Vista for Dummies', //It certainly is...
+  '220.52081 Zondervan: NIV Study Bible',
+  '231.7652 Dr Russell Humphries: Starlight and Time',
+  '623.82509051 Frederick Thomas Jane: Jane\'s Fighting Ships', //So far, the ships are winning.
+  '796.8092 Chuck Norris: The Official Chuck Norris Fact Book'
+];
+
+for(let i = 0; i < library.length; i++){
+  console.log(deweyDecimal(library, library[i]));
+}
 
 // const Btree = new BinaryTree();
 // Btree.insert(5, 5);
