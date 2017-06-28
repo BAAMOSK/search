@@ -123,15 +123,38 @@ class BinaryTree {
       }
     }
   }
+
+  dfsPreOrder(values = []) {
+    // console.log('This is the key:', this.key);
+    values.push(this.key);
+    if(this.left) {
+      this.left.dfsPreOrder(values);
+    }
+    if(this.right) {
+      this.right.dfsPreOrder(values);
+    }
+    return values;
+  }
+
   //depth first goes all the way to bottom
-  dfs(values = []) {
+  dfsInOrder(values = []) {
     if (this.left) {
-      values = this.left.dfs(values);
+      values = this.left.dfsInOrder(values);
     }
-    values.push(this.value);
+    values.push(this.key);
     if (this.right) {
-      values = this.right.dfs(values);
+      values = this.right.dfsInOrder(values);
     }
+    return values;
+  }
+  dfsPostOrder(values = []) {
+    if (this.left) {
+      values = this.left.dfsPostOrder(values);
+    }
+    if (this.right) {
+      values = this.right.dfsPostOrder(values);
+    }
+    values.push(this.key);
     return values;
   }
   //breadth first goes through each level --left to right
@@ -139,17 +162,21 @@ class BinaryTree {
     const queue = [this];
     while(queue.length) {
       const node = queue.shift();
-      values.push(node.value);
+      values.push(node.key);
       if(node.left) {
-        queue.push();
+        queue.push(node.left);
+      }
+      if(node.right) {
+        queue.push(node.right);
       }
     }
+    return values;
   }
 }
 
 
 let input = [89, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 14, 33, 45, 72, 56, 44, 21, 88, 27, 68,
-  15, 93, 98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 82, 6, 88, 3, 7, 46, 13, 11, 64, 31, 
+  15, 93, 98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 82, 6, 88, 3, 7, 46, 13, 11, 64, 31,
   26, 38, 28, 13, 17, 69, 90, 1, 6, 7, 64, 43, 9, 73, 80, 98, 46, 27, 22, 87, 49, 83, 6, 39, 42, 51, 54, 84, 34, 53, 78, 40, 14, 5, 76, 62];
 
 function intSearch(array, int){
@@ -236,9 +263,9 @@ const library = [
   '796.8092 Chuck Norris: The Official Chuck Norris Fact Book'
 ];
 
-for(let i = 0; i < library.length; i++){
-  console.log(deweyDecimal(library, library[i]));
-}
+// for(let i = 0; i < library.length; i++){
+//   console.log(deweyDecimal(library, library[i]));
+// }
 
 // const Btree = new BinaryTree();
 // Btree.insert(5, 5);
@@ -250,3 +277,12 @@ for(let i = 0; i < library.length; i++){
 // // console.log(BStree.dfs());
 // console.log(deweyDecimal(Btree, 531.45));
 // console.log(Btree);
+
+const data = [25, 15, 50, 10, 24, 35, 70, 4, 12, 18, 31, 44, 66, 90, 22];
+
+const POT = new BinaryTree();
+data.forEach(num => POT.insert(num));
+
+console.log('pre-order',POT.dfsPreOrder());
+console.log('in order', POT.dfsInOrder());
+console.log('post', POT.dfsPostOrder());
