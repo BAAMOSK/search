@@ -283,6 +283,51 @@ const data = [25, 15, 50, 10, 24, 35, 70, 4, 12, 18, 31, 44, 66, 90, 22];
 const POT = new BinaryTree();
 data.forEach(num => POT.insert(num));
 
-console.log('pre-order',POT.dfsPreOrder());
-console.log('in order', POT.dfsInOrder());
-console.log('post', POT.dfsPostOrder());
+// console.log('pre-order',POT.dfsPreOrder());
+// console.log('in order', POT.dfsInOrder());
+// console.log('post', POT.dfsPostOrder());
+
+// function eggDrop(floor = 1) {
+//   let egg = true;
+//   // const crack = (Math.random()*100).toFixed();
+//   const crack = 20;
+//   //console.log(crack);
+//   while(egg) {
+//     console.log('The floor is:',floor);
+//     if(floor === crack) {
+//       egg = false;
+//       return `The egg cracked at ${crack}`;
+//     }
+//     floor++;
+//   }
+//   return 1;
+// }
+
+// eggDrop();
+
+function eggDrop(buildingHeight = 100) {
+  let egg = true;
+  let building = [];
+  let crack = (Math.random()*buildingHeight).toFixed();
+  //console.log(crack);
+  for(let i = 1; i <= buildingHeight; i++){
+    building.push(i);
+  }
+    let floor = building[building.length /2];
+    let sucessfulDrop = 0;
+  for(let j = 0; j < 2; j++) {
+    console.log('hello loop')
+    if(floor >= crack) {
+      egg = false;
+      floor = building[building.length /4];
+    } else {
+      egg = true;
+      sucessfulDrop = floor;
+      floor = building[building.length * 0.75];
+      if(floor >= crack) egg = false;
+    }
+  }
+  console.log(crack, '     ', floor, '    ', sucessfulDrop);
+}
+
+eggDrop();
